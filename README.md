@@ -9,7 +9,7 @@ Convert Triodos transaction csv's to a YNAB-supported format
 ```
     python3 trio2ynab.py mutationsXXXXXXX.csv
 ```
-Make sure you are either in the directory where both the script and the .csv file is, or link the full path of both the script and mutations file like so:
+Make sure you are either in the directory where both the script and the .csv file are, or link the full path of both the script and mutations file like so:
 ```
     python3 /Users/joostgadellaa/Documents/Triodos2YNAB-master/trio2ynab.py /Users/joostgadellaa/Downloads/mutations20200500000000.csv 
 ```
