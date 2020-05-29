@@ -18,33 +18,23 @@ with open(input) as triodos_csv:
 transactions_ynab.append(['Date', 'Payee', 'Memo', 'Outflow', 'Inflow'])
 for transaction in transactions_trio:
 
-    #Date
     date = transaction[0]
 
-    #Payee
     if transaction[6] == 'BA':
-        ba_splitted = transaction[7].split('\\')
-        payee = ba_splitted[0] + ba_splitted[1]
+        ba_split = transaction[7].split('\\')
+        payee = ba_split[0] + ba_split[1]
+        memo = ba_split[2]
     else:
         payee = transaction[4]
-
-    #Memo
-    if transaction[6] == 'BA':
-        memo = 'Sven Rouschop'
-    else:
         memo = transaction[7]
 
-    #Inflow
     if transaction[3] == 'Credit':
         inflow = transaction[2]
-    else:
-        inflow = ''
-
-    #Outflow
-    if transaction[3] == 'Debet':
-        outflow = transaction[2]
-    else:
         outflow = ''
+
+    if transaction[3] == 'Debet':
+        inflow = ''
+        outflow = transaction[2]
 
     transactions_ynab.append([date, payee, memo, inflow, outflow])
 
