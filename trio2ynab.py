@@ -25,7 +25,7 @@ for transaction in transactions_trio:
         payee = ba_split[0] + ba_split[1]
         memo = ba_split[2]
     elif transaction[6] == 'KN':
-        payee = 'KN'
+        payee = 'Triodos Bank N.V.'
         memo = transaction[7]
     elif transaction[6] == 'GA':
         payee = 'GA'
