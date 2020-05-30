@@ -1,3 +1,5 @@
+print('')
+
 import sys
 import os
 import csv
@@ -10,9 +12,13 @@ transactions_ynab = []
 
 #Read Triodos csv
 with open(input) as triodos_csv:
+
     csv_reader = csv.reader(triodos_csv)
     for line in csv_reader:
         transactions_trio.append(line)
+    print('Script started from', os.getcwd())
+    print('Opening transactions from', input)
+
 
 #Convert
 transactions_ynab.append(['Date', 'Payee', 'Memo', 'Outflow', 'Inflow'])
@@ -44,8 +50,13 @@ for transaction in transactions_trio:
 
     transactions_ynab.append([date, payee, memo, inflow, outflow])
 
+print('Converted', len(transactions_trio), 'transactions')
+
 #Write bunq csv
 with open(output, 'w') as ynab_csv:
     csv_writer = csv.writer(ynab_csv)
     for transaction in transactions_ynab:
         csv_writer.writerow(transaction)
+    print('Exporting transactions to', output)
+
+print('')
