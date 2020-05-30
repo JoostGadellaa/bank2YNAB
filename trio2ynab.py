@@ -24,6 +24,12 @@ for transaction in transactions_trio:
         ba_split = transaction[7].split('\\')
         payee = ba_split[0] + ba_split[1]
         memo = ba_split[2]
+    if transaction[6] == 'KN':
+        payee = 'Triodos Bank'
+        memo = transaction[7]
+    if transaction[6] == 'GA':
+        payee = 'Geldautomaat'
+        memo = transaction[7]
     else:
         payee = transaction[4]
         memo = transaction[7]
