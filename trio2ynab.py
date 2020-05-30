@@ -18,15 +18,17 @@ with open(input) as triodos_csv:
 transactions_ynab.append(['Date', 'Payee', 'Memo', 'Outflow', 'Inflow'])
 for transaction in transactions_trio:
 
+    date = transaction[0]
+
     if transaction[6] == 'BA':
         ba_split = transaction[7].split('\\')
         payee = ba_split[0] + ba_split[1]
         memo = ba_split[2]
     elif transaction[6] == 'KN':
-        payee = 'Triodos Bank'
+        payee = 'KN'
         memo = transaction[7]
     elif transaction[6] == 'GA':
-        payee = 'Geldautomaat'
+        payee = 'GA'
         memo = transaction[7]
     else:
         payee = transaction[4]
