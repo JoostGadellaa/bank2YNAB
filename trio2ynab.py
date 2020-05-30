@@ -48,7 +48,7 @@ for transaction in transactions_trio:
         inflow = ''
         outflow = transaction[2]
 
-    transactions_ynab.append([date, payee, memo, inflow, outflow])
+    transactions_ynab.append([date, payee, memo, outflow, inflow])
 
 print('Converted', len(transactions_trio), 'transactions')
 
