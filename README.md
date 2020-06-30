@@ -4,10 +4,10 @@ Automatically convert your bank's transaction csv's to a YNAB-supported format. 
 ## Usage
 
 1. Install [Python 3](https://www.python.org/)
-2. Download the csv file from [Triodos](https://www.triodos.nl/veelgestelde-vragen/hoe-download-ik-een-overzicht-van-mijn-bij-en-afschrijvingen-in-mijn-boekhoudprogramma?id=126d202a2cba) or [N26](https://support.n26.com/en-de/payments-transfers-and-withdrawals/balance-and-limits/how-to-export-a-list-of-my-transactions)
+2. Download the csv file from [N26](https://support.n26.com/en-de/payments-transfers-and-withdrawals/balance-and-limits/how-to-export-a-list-of-my-transactions) or [Triodos](https://www.triodos.nl/veelgestelde-vragen/hoe-download-ik-een-overzicht-van-mijn-bij-en-afschrijvingen-in-mijn-boekhoudprogramma?id=126d202a2cba) 
 3. Convert using:
 ```
-    python3 20200600000000.csv
+    python3 bank2YNAB.py 20200600000000.csv
 ```
 Make sure you are either in the directory where both the script and the .csv file are, or link the full path of both the script and mutations file. E.g.:
 ```
