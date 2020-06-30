@@ -1,5 +1,3 @@
-print('')
-
 import sys
 import os
 import csv
@@ -7,56 +5,66 @@ import csv
 path = os.path.splitext(sys.argv[1])
 input = path[0] + path[1]
 output = path[0] + "YNAB" + path[1]
-transactions_trio = []
-transactions_ynab = []
+transactions_input = []
+transactions_output = []
+converter = None
 
-#Read Triodos csv
-with open(input) as triodos_csv:
+#Converter clases take a list of transations with comma-seperated items and returns the same format
+class N26Converter():
+    def convert(self, input):
+        pass
 
-    csv_reader = csv.reader(triodos_csv)
+class TrioConverter():
+    def convert(self, input):
+        output = []
+        output.append(['Date', 'Payee', 'Memo', 'Outflow', 'Inflow'])
+        for transaction in transactions_input:
+
+            date = transaction[0]
+
+            if transaction[6] == 'BA':
+                ba_split = transaction[7].split('\\')
+                payee = ba_split[0] + ba_split[1]
+                memo = ba_split[2]
+            elif transaction[6] == 'KN':
+                payee = 'Triodos Bank N.V.'
+                memo = transaction[7]
+            elif transaction[6] == 'GA':
+                payee = 'GA'
+                memo = transaction[7]
+            else:
+                payee = transaction[4]
+                memo = transaction[7]
+
+            if transaction[3] == 'Credit':
+                inflow = transaction[2]
+                outflow = ''
+
+            if transaction[3] == 'Debet':
+                inflow = ''
+                outflow = transaction[2]
+
+            output.append([date, payee, memo, outflow, inflow])
+        return output
+
+#Read csv
+with open(input) as input_csv:
+
+    csv_reader = csv.reader(input_csv)
     for line in csv_reader:
-        transactions_trio.append(line)
-    print('Script started from', os.getcwd())
-    print('Opening transactions from', input)
+        transactions_input.append(line)
 
+#Check bank type
+if transactions_input[0] == "\"Date\",\"Payee\",\"Account number\",\"Transaction type\",\"Payment reference\",\"Category\",\"Amount (EUR)\",\"Amount (Foreign Currency)\",\"Type Foreign Currency\",\"Exchange Rate\"":
+    converter = N26Converter()
+else:
+    converter = TrioConverter()
 
 #Convert
-transactions_ynab.append(['Date', 'Payee', 'Memo', 'Outflow', 'Inflow'])
-for transaction in transactions_trio:
+transactions_output = converter.convert(transactions_input)
 
-    date = transaction[0]
-
-    if transaction[6] == 'BA':
-        ba_split = transaction[7].split('\\')
-        payee = ba_split[0] + ba_split[1]
-        memo = ba_split[2]
-    elif transaction[6] == 'KN':
-        payee = 'Triodos Bank N.V.'
-        memo = transaction[7]
-    elif transaction[6] == 'GA':
-        payee = 'GA'
-        memo = transaction[7]
-    else:
-        payee = transaction[4]
-        memo = transaction[7]
-
-    if transaction[3] == 'Credit':
-        inflow = transaction[2]
-        outflow = ''
-
-    if transaction[3] == 'Debet':
-        inflow = ''
-        outflow = transaction[2]
-
-    transactions_ynab.append([date, payee, memo, outflow, inflow])
-
-print('Converted', len(transactions_trio), 'transactions')
-
-#Write bunq csv
-with open(output, 'w') as ynab_csv:
-    csv_writer = csv.writer(ynab_csv)
-    for transaction in transactions_ynab:
+#Write YNAB csv
+with open(transactions_output, 'w') as output_csv:
+    csv_writer = csv.writer(output_csv)
+    for transaction in transactions_output:
         csv_writer.writerow(transaction)
-    print('Exporting transactions to', output)
-
-print('')
