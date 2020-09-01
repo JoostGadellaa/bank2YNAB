@@ -1,6 +1,7 @@
 import sys
 import os
 import csv
+import re
 
 path = os.path.splitext(sys.argv[1])
 input = path[0] + path[1]
@@ -17,7 +18,7 @@ class N26Converter():
         for transaction in transactions_input:
             date = transaction[0]
             payee = transaction[1]
-            memo = transaction[4]
+            memo = clean(transaction[4])
             outflow = ''
             inflow = transaction[6]
             output.append([date, payee, memo, outflow, inflow])
@@ -30,7 +31,7 @@ class RaboConverter():
         for transaction in transactions_input:
             date = transaction[4]
             payee = transaction[9]
-            memo = transaction[19]
+            memo = clean(transaction[19])
             outflow = ''
             inflow = transaction[6]
             output.append([date, payee, memo, outflow, inflow])
@@ -45,16 +46,16 @@ class TrioConverter():
             if transaction[6] == 'BA':
                 ba_split = transaction[7].split('\\')
                 payee = ba_split[0] + ba_split[1]
-                memo = ba_split[2]
+                memo = clean(ba_split[2])
             elif transaction[6] == 'KN':
                 payee = 'Triodos Bank N.V.'
-                memo = transaction[7]
+                memo = clean(transaction[7])
             elif transaction[6] == 'GA':
                 payee = 'GA'
-                memo = transaction[7]
+                memo = clean(transaction[7])
             else:
                 payee = transaction[4]
-                memo = transaction[7]
+                memo = clean(transaction[7])
             if transaction[3] == 'Credit':
                 inflow = transaction[2]
                 outflow = ''
@@ -64,6 +65,14 @@ class TrioConverter():
             output.append([date, payee, memo, outflow, inflow])
         return output
 
+#Function for Memo cleaning
+def clean(dirty_string):
+    #Remove leading IBAN
+    clean_string = re.sub("^\D{2}\d{2}\D{3,4}\d{8,20}[\s, :]", "", dirty_string)
+    #Remove iDeal/incasso identification numbers
+    clean_string = re.sub("^\d+\s\d+\s", "", clean_string)
+    return clean_string
+
 #Read csv
 try:
     with open(input) as input_csv:
@@ -71,14 +80,12 @@ try:
         csv_reader = csv.reader(input_csv)
         for line in csv_reader:
             transactions_input.append(line)
-
 except:
     with open(input, encoding='latin-1') as input_csv: #encoding='latin-1'
 
         csv_reader = csv.reader(input_csv)
         for line in csv_reader:
             transactions_input.append(line)
-
 print("Opening " + input)
 
 #Check bank type
