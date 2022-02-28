@@ -1,10 +1,10 @@
 # bank2YNAB
-Automatically convert your bank's transaction csv's to a YNAB-supported format. Currently supports N26, Rabobank and Triodos Bank.
+Automatically convert your bank's transaction csv's to a YNAB-supported format. Currently supports N26, Rabobank, Triodos Bank and ASN Bank.
 
 ## Usage
 
 1. Install [Python 3](https://www.python.org/)
-2. Download the csv file from [N26](https://support.n26.com/en-de/payments-transfers-and-withdrawals/balance-and-limits/how-to-export-a-list-of-my-transactions), [Rabobank](https://www.rabobank.nl/particulieren/betalen/service/financiele-overzichten/digitaal-rekeningafschrift-downloaden/) or [Triodos](https://www.triodos.nl/veelgestelde-vragen/hoe-download-ik-een-overzicht-van-mijn-bij-en-afschrijvingen-in-mijn-boekhoudprogramma?id=126d202a2cba) 
+2. Download the csv file from [N26](https://support.n26.com/en-de/payments-transfers-and-withdrawals/balance-and-limits/how-to-export-a-list-of-my-transactions), [Rabobank](https://www.rabobank.nl/particulieren/betalen/service/financiele-overzichten/digitaal-rekeningafschrift-downloaden/), [Triodos](https://www.triodos.nl/veelgestelde-vragen/hoe-download-ik-een-overzicht-van-mijn-bij-en-afschrijvingen-in-mijn-boekhoudprogramma?id=126d202a2cba) or [ASN](https://www.asnbank.nl/online/web/onlinebankieren/inloggen/#/inloggen)
 3. Convert using:
 ```
     python3 bank2YNAB.py 20200600000000.csv
