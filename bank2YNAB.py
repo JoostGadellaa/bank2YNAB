@@ -51,7 +51,7 @@ class ASNConverter():
             else:
                 payee = transaction[3]
                 memo = clean(transaction[17])
-            
+
             output.append([date, payee, memo, outflow, inflow])
         return output
 
@@ -115,7 +115,7 @@ except:
 print("Opening " + input)
 
 #Check bank type
-if transactions_input[0] == ['Date', 'Payee', 'Account number', 'Transaction type', 'Payment reference', 'Category', 'Amount (EUR)', 'Amount (Foreign Currency)', 'Type Foreign Currency', 'Exchange Rate']:
+if transactions_input[0] == ['Date', 'Payee', 'Account number', 'Transaction type', 'Payment reference', 'Amount (EUR)', 'Amount (Foreign Currency)', 'Type Foreign Currency', 'Exchange Rate']:
     converter = N26Converter()
     print("N26 csv recognised")
 elif transactions_input[0] == ['IBAN/BBAN', 'Munt', 'BIC', 'Volgnr', 'Datum', 'Rentedatum', 'Bedrag', 'Saldo na trn', 'Tegenrekening IBAN/BBAN', 'Naam tegenpartij', 'Naam uiteindelijke partij', 'Naam initiërende partij', 'BIC tegenpartij', 'Code', 'Batch ID', 'Transactiereferentie', 'Machtigingskenmerk', 'Incassant ID', 'Betalingskenmerk', 'Omschrijving-1', 'Omschrijving-2', 'Omschrijving-3', 'Reden retour', 'Oorspr bedrag', 'Oorspr munt', 'Koers']:
