@@ -20,7 +20,7 @@ class N26Converter():
             payee = transaction[1]
             memo = clean(transaction[4])
             outflow = ''
-            inflow = transaction[6]
+            inflow = transaction[5]
             output.append([date, payee, memo, outflow, inflow])
         return output
 
@@ -102,16 +102,15 @@ def clean(dirty_string):
 #Read csv
 try:
     with open(input) as input_csv:
-
         csv_reader = csv.reader(input_csv)
         for line in csv_reader:
             transactions_input.append(line)
 except:
     with open(input, encoding='latin-1') as input_csv: #encoding='latin-1'
-
         csv_reader = csv.reader(input_csv)
         for line in csv_reader:
             transactions_input.append(line)
+
 print("Opening " + input)
 
 #Check bank type
